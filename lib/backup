@@ -1,0 +1,151 @@
+write & upload
+if($_GET['mode'] == 'write') {
+                        echo '<form action="redir.php" method="post">  
+                                <label id="title" for="title">TITLE : </label>
+                                <input class="txbox" type="text" name="title"><br><br>
+                                <span id="explain">EXPLAIN</span><br>
+                                <textarea name="explain" rows="10" style="resize:none;"></textarea>
+                                <input class="submit" type="submit" value="Post">
+                            </form>';
+                    }  else if ($_GET['mode'] == 'read') {
+                        echo '<div id="reti">
+                        <div><b>TITLE</b></div><div>'.htmlspecialchars(urldecode($_GET['file'])).'</div>
+                        </div><br>
+                        <div id="reex">'.nl2br(htmlspecialchars(urldecode(
+                        file_get_contents('data/'.$_GET['file'])))).'</div>
+                        ';
+                    } else if ($_GET['mode'] == 'update') {
+                        echo '<form action="updir.php" method="post">  
+                                <input type="hidden" value="'.$_GET['file'].'" name="file">
+                                <label id="title" for="title">TITLE : </label>
+                                <input class="txbox" type="text" name="title" value="'.urldecode($_GET['file']).'"><br><br>
+                                <span id="explain">EXPLAIN</span><br>
+                                <textarea name="explain" rows="10" style="resize:none; font-size:20px;">'.urldecode(
+                                file_get_contents('data/'.$_GET['file'])).'</textarea>
+                                <input class="submit" type="submit" value="Modify">
+                            </form>';
+                    }
+button 
+echo '<button onclick="location.href=\'index.php\'" class="tpbut">Cancel</button>';
+            } else if ($_GET['mode'] == 'read') {
+                echo '<button onclick="location.href=\'index.php\'" class="tpbut">Back</button>&nbsp
+                <button onclick="location.href=\'dedir.php?file='.urlencode($_GET['file']).'\'" class="tpbut">Delete</button>&nbsp
+                <button onclick="location.href=\'index.php?mode=update&file='.urlencode($_GET['file']).'\'" class="tpbut">Update</button>';
+            } else if ($_GET['mode'] == 'update') {
+                echo '<button onclick="location.href=\'index.php?mode=read&file='.urlencode($_GET['file']).'\'" class="tpbut">Back</button>&nbsp';
+            }
+        } else {
+            echo '<button onclick="location.href=\'index.php?mode=write\'" class="tpbut">Write</button>';
+            if (isset($_GET['sort'])) {
+                echo '<button onclick="location.href=\'index.php\'" class="stbut">Sort:abc</button>';
+            } else {
+                echo '<button onclick="location.href=\'index.php?sort=abc\'" class="stbut">Sort:date</button>';
+
+
+
+echo '<div id="reti">
+        <div><b>TITLE</b></div><div>'.htmlspecialchars(urldecode($_GET['file'])).'</div>
+        </div><br>
+        <div id="reex">'.nl2br(htmlspecialchars(urldecode(
+        file_get_contents('data/'.$_GET['file'])))).'</div>
+        ';
+
+
+        $data = scandir('data/');
+                    if (isset($_GET['sort'])) {
+                    for($i = 0;$i < count($data);$i++) {
+                        if($data[$i] != '.' && $data[$i] != '..') {
+                            if (mb_strlen(urldecode($data[$i]),'utf-8') > 12) {
+                                $rena = mb_substr(urldecode($data[$i]),0,12,'utf-8')."...";
+                                echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($data[$i]).'\'">'.htmlspecialchars($rena).'</button>';
+                            } else {
+                                echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($data[$i]).'\'">'.
+                                htmlspecialchars(urldecode($data[$i])).'</button>';
+                            }
+                        }
+                    }
+                } else {
+                    $timesort = array();
+                    for ($i = 0;$i < count($data);$i++) {
+                        if($data[$i] != '.' && $data[$i] != '..') {
+                            $time = date("Y-m-d h:i:s", filemtime('data/'.$data[$i]));
+                            array_push($timesort,$time.$data[$i]);
+                        }
+                    }
+                    rsort($timesort);
+                    for ($i = 0;$i < count($timesort);$i++) {
+                        $timelen = mb_strlen($timesort[$i],'utf-8');
+                        $timedata = mb_substr($timesort[$i],19,$timelen,'utf-8');
+                        if (mb_strlen(urldecode($timedata),'utf-8') > 12) {
+                            $rena = mb_substr(urldecode($timedata),0,12,'utf-8')."...";
+                            echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($timedata).'\'">'.htmlspecialchars($rena).'</button>';
+                        } else {
+                            echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($timedata).'\'">'.
+                            htmlspecialchars(urldecode($timedata)).'</button>';
+                        }
+                    }
+                }
+
+
+                if(!empty($_POST['title']) && !empty($_POST['explain'])) {
+        rename('data/'.$_POST['file'],'data/'.urlencode($_POST['title']));
+        file_put_contents('data/'.urlencode($_POST['title']),urlencode($_POST['explain']));
+        header('Location: index.php');
+    } else {
+        header('Location: index.php?mode=update&file='.urlencode($_POST['file']).'&error=0');
+    }
+    if(!empty($_POST['title']) && !empty($_POST['explain'])) {
+        file_put_contents('data/'.urlencode($_POST['title']),urlencode($_POST['explain']));
+        header('Location: index.php');
+        } else {
+        header('Location: index.php?mode=write&error=0');
+    }
+
+
+
+    if(isset($_GET['find']) && trim($_GET['find']) != '') {
+                            $data = scandir('data/');
+                            $on = 0;
+                            for ($i = 0; $i < count($data); $i++) {
+                                if($data[$i] != '.' && $data[$i] != '..') {
+                                    if (strpos($data[$i],urlencode($_GET['find'])) !== false) {
+                                        $on = 1;
+                                        if (mb_strlen(urldecode($data[$i]),'utf-8') > 12) {
+                                            $rena = mb_substr(urldecode($data[$i]),0,12,'utf-8')."...";
+                                            echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($data[$i]).'\'">'.htmlspecialchars($rena).'</button>';
+                                        } else {
+                                            echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($data[$i]).'\'">'.
+                                            htmlspecialchars(urldecode($data[$i])).'</button>';
+                                        }
+                                    }
+                                }
+                            }
+                            if ($on == 0) {
+                                echo "<div class='searchtext'>Nothing Found</div>"; 
+                            } 
+                        } else {
+                            echo "<div class='searchtext'>SEARCH IT...</div>";
+                        }
+
+
+                        $trash = 0;
+                        $data = scandir('trash/');
+                        echo '<form action="trdir.php" method="post">';
+                        for($i = 0;$i < count($data);$i++) {
+                            if ($data[$i] != '.' && $data[$i] != '..') {
+                                $trash = 1;
+                                echo '<input type="checkbox" name="file[]" value='.$data[$i].'>'.urldecode($data[$i]).'<br>';
+                            }
+                        }
+                        if ($trash == 0) {
+                            echo '<div class="searchtext">Nothing Exists</div>';
+                        } else {
+                            echo '<input type="submit" name="re" value="Recovery"> 
+                            <input type="submit" name="re" value="Remove">';
+                        }
+                        echo '</form>';
+
+                        $con = mysqli_connect("127.0.0.1","root","inho1019","codi");
+                        
+                        $con->real_connect('gcp.connect.psdb.cloud', 'dvkqlpbz35022im77hbs', 
+    'pscale_pw_tVpiAS0OLvUBT8smLvQPT1yI9PVeXIrEJyTgOP2Zjx9', 'codi');

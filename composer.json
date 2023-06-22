@@ -1,0 +1,10 @@
+{
+    "name": "bitcamp/codingdiary",
+    "autoload": {
+        "psr-4": {
+            "Bitcamp\\Codingdiary\\": "src/"
+        }
+    },
+    "require": {"ext-mbstring": "*",
+        "symfony/polyfill-mbstring": "^1.27"}
+}
