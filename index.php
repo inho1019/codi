@@ -113,7 +113,8 @@
                             trash();
                         }
                     } else if ($_GET['mode'] == 'register') {
-                        loreform('indir.php',"<li>NICKNAME<br><input type='text' name='nickname' pattern='^[a-zA-Zㄱ-힣0-9]*$'></li>",'REGISTER');
+                        loreform('indir.php',"<li>NICKNAME<br><input type='text' name='nickname' pattern='^[a-zA-Zㄱ-힣0-9]*$' maxlength='16'>
+                        </li>",'REGISTER');
                     } else if ($_GET['mode'] == 'login') {
                         loreform('lodir.php',null,'LOGIN');
                     }
