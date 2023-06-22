@@ -8,10 +8,14 @@
     if (!isset($duname) && !isset($duid)) {
         $register = mysqli_query($con,'insert into users (name,id,password,date)
         values ("'.$_POST['nickname'].'","'.$_POST['id'].'","'.$_POST['password'].'",NOW())');
-        echo '<script>
+        if($register === true) {
+            echo '<script>
                 alert("Register Success");
                 location.href = "index.php";
             </script>';
+        } else {
+            header('Location: index.php?mode=register&error=0');
+        }
     } else {
         header('Location: index.php?mode=register&error=1');
     };
