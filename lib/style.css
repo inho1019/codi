@@ -221,8 +221,9 @@ input:invalid {
     border-bottom: 1px solid saddlebrown;
 }
 .putimg {
-    width: 100%;
-    left: 20%;
+    margin-left: 2.5%;
+    width: 95%;
+    border-radius: 5vw;
 }
 #filebut {
     margin-top: 15px;
