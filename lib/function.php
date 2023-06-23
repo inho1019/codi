@@ -1,11 +1,32 @@
 <?php
-    function form($link,$val1,$val2,$submit,$hidden) {
-        echo '<form action="'.$link.'" method="post">  
+    //이미지업로드 소스
+    require 'vendor/autoload.php';
+
+    use Aws\S3\S3Client;
+    use Aws\S3\Exception\S3Exception;
+
+    $bucketName = 'codingdiary';
+    $accessKeyId = 'AKIAXPHWSBHLWATBGOMJ';
+    $secretAccessKey = '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';
+    $region = 'eu-west-2';
+
+    $awClient = new S3Client([
+        'version' => 'latest',
+        'region' => $region,
+        'credentials' => [
+            'key' => $accessKeyId,
+            'secret' => $secretAccessKey,
+        ],
+    ]);
+    //aws s3
+    function form($link,$val1,$val2,$submit,$hidden,$img) {
+        echo '<form action="'.$link.'" method="post" enctype="multipart/form-data">  
                 <input type="hidden" value="'.$hidden.'" name="file">
                 <label id="title" for="title">TITLE </label>
                 <input class="txbox" type="text" name="title" value="'.$val1.'"><br><br>
                 <span id="explain">EXPLAIN</span><br>
                 <textarea name="explain" rows="10" style="resize:none; font-size:20px;">'.$val2.'</textarea>
+                '.$img.'
                 <input class="submit" type="submit" value="'.$submit.'">
             </form>';
     }
@@ -23,12 +44,24 @@
                 $writer =  mb_substr($lines[$j],19,$long,'utf-8');
             }
         }
+        $imgdata = file_get_contents('data/'.$_GET['file']);
+        $imglines = explode("\n", $imgdata);
+        $imgsrc;
+        for ($i = 0;$i < count($imglines);$i++) {
+            if ($i == count($imglines) - 1) {
+                $imgsrc = $imglines[$i];
+            }
+        }
+        $inputimg = null;
+        if (mb_substr($imgsrc,0,5,'utf-8') == 'https'){
+            $inputimg = '<br><img class="putimg" src="'.$imgsrc.'">';
+        }
         echo '<div class="writer"><b>WRITER | </b>'.$writer.'</div><br>
             <div id="reti">
             <div><b>TITLE</b></div><div>'.htmlspecialchars(urldecode($_GET['file'])).'</div>
             </div><br>
             <div id="reex">'.nl2br(htmlspecialchars(urldecode(
-            file_get_contents('data/'.$_GET['file'])))).'</div>
+            file_get_contents('data/'.$_GET['file'])))).'</div>'.$inputimg.'
             ';
     }
     function abc() {
@@ -155,13 +188,13 @@
                 </form>
             ";
     }
-    function loreform($link,$null,$submit) {
+    function loreform($link,$null,$submit,$re) {
         echo "
             <form class='register' action=$link method='post'>
                 <ul class='reli'>
                     $null
-                    <li>ID<br><input type='text' name='id' pattern='^[a-zA-Z0-9]*$' minlength='4' maxlength='16'></li>
-                    <li>PASSWORD<br><input type='password' name='password' pattern='^[a-zA-Z0-9]*$' minlength='4' maxlength='32'></li>
+                    <li>ID<br><input type='text' name='id' pattern='^[a-z0-9]*$' minlength='4' maxlength='16' $re></li>
+                    <li>PASSWORD<br><input type='password' name='password' pattern='^[a-zA-Z0-9]*$' minlength='4' maxlength='32' $re></li>
                     <li><button type='submit'>$submit</button></li>
                 </ul>
             </form>
