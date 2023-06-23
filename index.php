@@ -72,8 +72,13 @@
             searchform();
         }
     ?>
-    <fieldset>
-        <legend style="font-weight : bold; font-size: 30px;">
+    <fieldset style=" 
+    <?php
+    if (!isset($_GET['mode'])) {
+        echo "text-align:center;";
+    }
+    ?>">
+        <legend style="text-align: left;font-weight : bold; font-size: 30px;">
             <?php
                 if(isset($_GET['mode'])) {
                     echo strtoupper($_GET['mode']);
@@ -97,14 +102,15 @@
                 if(isset($_GET['mode'])) {
                     if($_GET['mode'] == 'write') {
                         if(isset($_SESSION['activate'])) {
-                            form("redir.php",null,null,"Post",null);
+                            form("redir.php",null,null,"Post",null,
+                            '<input id="filebut" type="file" name="file" accept=".png, .jpg, .jpeg, .gif">');
                         }
                     } else if ($_GET['mode'] == 'read') {
                         read();
                     } else if ($_GET['mode'] == 'update') {
                         if(isset($_SESSION['activate'])) {
                             form("updir.php",urldecode($_GET['file']),urldecode(
-                            file_get_contents('data/'.$_GET['file'])),"Modify",$_GET['file']);
+                            file_get_contents('data/'.$_GET['file'])),"Modify",$_GET['file'],null);
                         }
                     } else if ($_GET['mode'] == 'search') {
                         findsys();
@@ -114,10 +120,10 @@
                         }
                     } else if ($_GET['mode'] == 'register') {
                         loreform('indir.php',"<li>NICKNAME<br><input type='text' name='nickname' 
-                        pattern='^[a-zA-Zㄱ-힣0-9]*$' maxlength='16' minlength='4'>
-                        </li>",'REGISTER');
+                        pattern='^[a-zA-Zㄱ-힣0-9]*$' maxlength='16' minlength='4' required>
+                        </li>",'REGISTER','required');
                     } else if ($_GET['mode'] == 'login') {
-                        loreform('lodir.php',null,'LOGIN');
+                        loreform('lodir.php',null,'LOGIN',null);
                     }
                 } else {
                     abc();

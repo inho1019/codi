@@ -1,10 +1,6 @@
 {
-    "name": "bitcamp/codingdiary",
-    "autoload": {
-        "psr-4": {
-            "Bitcamp\\Codingdiary\\": "src/"
-        }
-    },
-    "require": {"ext-mbstring": "*",
-        "symfony/polyfill-mbstring": "^1.27"}
+    "require": {
+        "aws/aws-sdk-php": "^3.273",
+        "symfony/polyfill-mbstring": "^1.27"
+    }
 }
