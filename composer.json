@@ -1,5 +1,11 @@
 {
-    "require": {
+  "repositories": [
+    {
+      "type": "git",
+      "url": "git@github.com:inho1019/codi.git"
+    }
+  ],
+  "require": {
         "aws/aws-sdk-php": "^3.273",
         "symfony/polyfill-mbstring": "^1.27"
     }

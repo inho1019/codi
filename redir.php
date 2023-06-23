@@ -27,6 +27,6 @@
             'SourceFile' => $_FILES['file']['tmp_name'],
         ]);
         file_put_contents('data/'.urlencode($_POST['title']),
-        "\n Image Saurce: \n".$result['ObjectURL'], FILE_APPEND);;
+        "\n\n Image Saurce (Don't Modify): \n\n".$result['ObjectURL'], FILE_APPEND);;
     }
 ?>
