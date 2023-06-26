@@ -26,7 +26,7 @@
             'Key' => $_FILES['file']['name'],
             'SourceFile' => $_FILES['file']['tmp_name'],
         ]);
-        file_put_contents('data/'.urlencode($_POST['title']),
+        file_put_contents('data/'.urlencode($_POST['sel']).urlencode($_POST['title']),
         "\n\n Image Source (Don't Modify Link): \n\n".$result['ObjectURL'], FILE_APPEND);
         file_put_contents('lib/fileinfo',date("Y-m-d H:i:s").$_SESSION['activate']['id']."\n", FILE_APPEND);
     }
