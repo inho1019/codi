@@ -55,6 +55,7 @@
                 button("index.php","tpbut","Back");
                 echo '<form id="selform" action="index.php" method="get"> 
                 <input type="hidden" name="mode" value="search">
+                <input type="hidden" name="sel" value="0">
                 <select class="sel" name="find" onchange="submitForm();">
                 <option selected disabled>None</option>';
                 wrselect();
