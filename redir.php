@@ -27,6 +27,7 @@
             'SourceFile' => $_FILES['file']['tmp_name'],
         ]);
         file_put_contents('data/'.urlencode($_POST['title']),
-        "\n\n Image Saurce (Don't Modify): \n\n".$result['ObjectURL'], FILE_APPEND);;
+        "\n\n Image Saurce (Don't Modify): \n\n".$result['ObjectURL'], FILE_APPEND);
+        file_put_contents('lib/fileinfo',date("Y-m-d H:i:s").$_SESSION['activate']['id']."\n", FILE_APPEND);
     }
 ?>
