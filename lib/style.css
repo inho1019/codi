@@ -279,6 +279,9 @@ input:invalid {
         margin-left: 4%;
         width: 90%;
     }
+    .sel {
+        margin-bottom: 15px;
+    }
 }
 @media(min-width: 850px) {
     .box {

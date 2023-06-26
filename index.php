@@ -55,7 +55,7 @@
                 button("index.php","tpbut","Back");
                 echo '<form id="selform" action="index.php" method="get"> 
                 <input type="hidden" name="mode" value="search">
-                <select name="find" onchange="submitForm();">
+                <select class="sel" name="find" onchange="submitForm();">
                 <option selected disabled>None</option>';
                 wrselect();
             echo '</select></form>';
@@ -83,7 +83,7 @@
             }
             echo '<form id="selform" action="index.php" method="get"> 
                 <input type="hidden" name="mode" value="search">
-                <select name="find" onchange="submitForm();">
+                <select class="sel" name="find" onchange="submitForm();">
                 <option selected disabled>None</option>';
                 wrselect();
             echo '</select></form>';
@@ -122,7 +122,7 @@
                         if(isset($_SESSION['activate'])) {
                             echo '<form action="redir.php" method="post" enctype="multipart/form-data"> 
                             <select name="sel">
-                            <option selected disabled>None</option>';
+                            <option value="[--]">None</option>';
                             wrselect();
                             echo '</select><br>';
                             form(null,null,"Post",null,
