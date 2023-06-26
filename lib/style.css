@@ -229,21 +229,6 @@ input:invalid {
     margin-top: 15px;
     margin-left: 10px;
 }
-.tabbut {
-    margin-right: 60px;
-    float: right;
-    margin-top: 70px;
-    width:25px;
-    height: 25px;
-    border-radius: 50%;
-    border: 1px solid gray;
-    background-color: seashell;
-}
-.tabbut:hover {
-    border-top: 11.5px solid gray;
-    border-bottom: 11.5px solid gray;
-    transition: 1.2s ease-in-out;
-}
 @media(max-width: 576px) {
     .searchform {
         width: 70%;
@@ -289,6 +274,10 @@ input:invalid {
         left: 72%;
         width: 25%;
         font-size: 10px;
+    }
+    .putimg {
+        margin-left: 5%;
+        width: 90%;
     }
 }
 @media(min-width: 850px) {
