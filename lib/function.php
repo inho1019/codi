@@ -44,7 +44,7 @@
                 $writer =  mb_substr($lines[$j],19,$long,'utf-8');
             }
         }
-        $imgdata = file_get_contents('data/'.$_GET['file']);
+        $imgdata = urldecode(file_get_contents('data/'.$_GET['file']));
         $imglines = explode("\n", $imgdata);
         $imgsrc;
         for ($i = 0;$i < count($imglines);$i++) {

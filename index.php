@@ -103,7 +103,7 @@
                 if(isset($_GET['mode'])) {
                     if($_GET['mode'] == 'write') {
                         if(isset($_SESSION['activate'])) {
-                            form("redir.php","[]",null,"Post",null,
+                            form("redir.php","[ ]",null,"Post",null,
                             '<input id="filebut" type="file" name="file" accept=".png, .jpg, .jpeg, .gif">');
                         }
                     } else if ($_GET['mode'] == 'read') {
