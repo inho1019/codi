@@ -19,16 +19,14 @@
         ],
     ]);
     //aws s3
-    function form($link,$val1,$val2,$submit,$hidden,$img) {
-        echo '<form action="'.$link.'" method="post" enctype="multipart/form-data">  
-                <input type="hidden" value="'.$hidden.'" name="file">
+    function form($val1,$val2,$submit,$hidden,$img) {
+        echo ' <input type="hidden" value="'.$hidden.'" name="file">
                 <label id="title" for="title">TITLE </label>
                 <input class="txbox" type="text" name="title" value="'.$val1.'"><br><br>
                 <span id="explain">EXPLAIN</span><br>
                 <textarea name="explain" rows="10" style="resize:none; font-size:20px;">'.$val2.'</textarea>
                 '.$img.'
-                <input class="submit" type="submit" value="'.$submit.'">
-            </form>';
+                <input class="submit" type="submit" value="'.$submit.'">';
     }
     function button($link,$class,$val) {
         echo '<button onclick="location.href=\''.$link.'\'" class="'.$class.'">'.$val.'</button>';
@@ -79,8 +77,8 @@
                                     $writer =  mb_substr($lines[$j],19,$long,'utf-8');
                                 }
                             }
-                            if (mb_strlen(urldecode($data[$i]),'utf-8') > 12) {
-                                $rena = mb_substr(urldecode($data[$i]),0,12,'utf-8')."...";
+                            if (mb_strlen(urldecode($data[$i]),'utf-8') > 16) {
+                                $rena = mb_substr(urldecode($data[$i]),0,16,'utf-8')."...";
                                 echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($data[$i]).'\'">'.htmlspecialchars($rena).
                                 '<br><span class="smwr"><b>BY | </b> '.$writer.'</span></button>';
                             } else {
@@ -111,8 +109,8 @@
                         }
                         $timelen = mb_strlen($timesort[$i],'utf-8');
                         $timedata = mb_substr($timesort[$i],19,$timelen,'utf-8');
-                        if (mb_strlen(urldecode($timedata),'utf-8') > 13) {
-                            $rena = mb_substr(urldecode($timedata),0,13,'utf-8')."...";
+                        if (mb_strlen(urldecode($timedata),'utf-8') > 16) {
+                            $rena = mb_substr(urldecode($timedata),0,16,'utf-8')."...";
                             echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($timedata).'\'">'
                             .htmlspecialchars($rena).'<br><span class="smwr"><b>BY | </b> '.$writer.'</button>';
                         } else {
@@ -122,11 +120,11 @@
                     }
                 }
     }
-    function direct($rename,$link) {
+    function direct($rename,$link,$sel) {
         if(!empty($_POST['title']) && !empty($_POST['explain']) && 
         trim($_POST['title']) != '' && trim($_POST['explain']) != '') {
             $rename;
-            file_put_contents('data/'.urlencode($_POST['title']),urlencode($_POST['explain']));
+            file_put_contents('data/'.$sel.urlencode($_POST['title']),urlencode($_POST['explain']));
             file_put_contents('lib/fileinfo',date("Y-m-d H:i:s").$_SESSION['activate']['id']."\n", FILE_APPEND);
             header('Location: index.php');
         } else {
@@ -141,8 +139,8 @@
                 if($data[$i] != '.' && $data[$i] != '..') {
                     if (strpos($data[$i],urlencode($_GET['find'])) !== false) {
                         $on = 1;
-                        if (mb_strlen(urldecode($data[$i]),'utf-8') > 13) {
-                            $rena = mb_substr(urldecode($data[$i]),0,13,'utf-8')."...";
+                        if (mb_strlen(urldecode($data[$i]),'utf-8') > 16) {
+                            $rena = mb_substr(urldecode($data[$i]),0,16,'utf-8')."...";
                             echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($data[$i]).'\'">'.htmlspecialchars($rena).'</button>';
                         } else {
                             echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($data[$i]).'\'">'.
@@ -199,5 +197,12 @@
                 </ul>
             </form>
             ";
+    }
+    function wrselect() {
+        $data = file_get_contents('lib/select');
+        $seldata = explode("\n", $data);
+        for($i = 0;$i < count($seldata);$i += 2) {
+            echo '<option value="' . $seldata[$i] . '">' . $seldata[$i+1] . '</option>';                
+        }
     }
 ?>

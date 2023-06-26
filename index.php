@@ -10,6 +10,11 @@
         require('lib/function.php');
     ?>
     <link rel="stylesheet" href="lib/style.css" type="text/css">
+<script>
+    function submitForm() {
+        document.getElementById("selform").submit();
+    }
+</script>
 </head>
 <body>
     <a href="index.php" class="title">Coding Diary</a>
@@ -48,6 +53,12 @@
                 button("index.php?mode=read&file=".urlencode($_GET['file'])."","tpbut","Back");
             } else if ($_GET['mode'] == 'search') {
                 button("index.php","tpbut","Back");
+                echo '<form id="selform" action="index.php" method="get"> 
+                <input type="hidden" name="mode" value="search">
+                <select name="find" onchange="submitForm();">
+                <option selected disabled>None</option>';
+                wrselect();
+            echo '</select></form>';
                 searchform();
             } else if ($_GET['mode'] == 'trash') {
                 button("index.php","tpbut","Back");
@@ -70,6 +81,12 @@
             } else {
                 button("index.php?sort=abc","stbut","Date");
             }
+            echo '<form id="selform" action="index.php" method="get"> 
+                <input type="hidden" name="mode" value="search">
+                <select name="find" onchange="submitForm();">
+                <option selected disabled>None</option>';
+                wrselect();
+            echo '</select></form>';
             searchform();
         }
     ?>
@@ -103,15 +120,24 @@
                 if(isset($_GET['mode'])) {
                     if($_GET['mode'] == 'write') {
                         if(isset($_SESSION['activate'])) {
-                            form("redir.php","[ ]",null,"Post",null,
+                            echo '<form action="redir.php" method="post" enctype="multipart/form-data"> 
+                            <select name="sel">
+                            <option selected disabled>None</option>';
+                            wrselect();
+                            echo '</select><br>';
+                            form(null,null,"Post",null,
                             '<input id="filebut" type="file" name="file" accept=".png, .jpg, .jpeg, .gif">');
+                            echo '</form>';
+
                         }
                     } else if ($_GET['mode'] == 'read') {
                         read();
                     } else if ($_GET['mode'] == 'update') {
                         if(isset($_SESSION['activate'])) {
-                            form("updir.php",urldecode($_GET['file']),urldecode(
+                            echo '<form action="updir.php" method="post" enctype="multipart/form-data">';
+                            form(urldecode($_GET['file']),urldecode(
                             file_get_contents('data/'.$_GET['file'])),"Modify",$_GET['file'],null);
+                            echo '</form>';
                         }
                     } else if ($_GET['mode'] == 'search') {
                         findsys();

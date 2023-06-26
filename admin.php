@@ -28,4 +28,18 @@ $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb',
     }
     $con->close();
 ?>
-</from>
+</form>
+
+<?php
+    if(isset($_POST['sel'])) {
+        file_put_contents('lib/select',$_POST['sel']);
+    }
+?>
+<form action='admin.php' method='post'>
+<textarea name="sel" rows="10" style="resize:none; font-size:20px;">
+    <?php
+        echo file_get_contents('lib/select');
+    ?>
+</textarea><br>
+<button type='submit'>Modify</button>
+</form>

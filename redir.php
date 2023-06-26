@@ -19,7 +19,7 @@
     ]);
     session_start();
     require('lib/function.php');
-    direct(null,'?mode=write');
+    direct(null,'?mode=write',urlencode($_POST['sel']));
     if (isset($_FILES['file'])) {
         $result = $awClient->putObject([
             'Bucket' => $bucketName,
