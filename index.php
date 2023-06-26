@@ -83,6 +83,7 @@
             }
             echo '<form id="selform" action="index.php" method="get"> 
                 <input type="hidden" name="mode" value="search">
+                <input type="hidden" name="sel" value="0">
                 <select class="sel" name="find" onchange="submitForm();">
                 <option selected disabled>None</option>';
                 wrselect();
@@ -122,7 +123,7 @@
                         if(isset($_SESSION['activate'])) {
                             echo '<form action="redir.php" method="post" enctype="multipart/form-data"> 
                             <select name="sel">
-                            <option value="[--]">None</option>';
+                            <option value="[--] ">None</option>';
                             wrselect();
                             echo '</select><br>';
                             form(null,null,"Post",null,

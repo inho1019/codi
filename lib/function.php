@@ -137,7 +137,11 @@
             $on = 0;
             for ($i = 0; $i < count($data); $i++) {
                 if($data[$i] != '.' && $data[$i] != '..') {
-                    if (strpos($data[$i],urlencode($_GET['find'])) !== false) {
+                    $find = $_GET['find'];
+                    if (isset($_GET['sel'])) {
+                        $find = mb_substr($_GET['find'],0,4,'utf-8');
+                    }
+                    if (strpos($data[$i],urlencode($find)) !== false) {
                         $on = 1;
                         if (mb_strlen(urldecode($data[$i]),'utf-8') > 16) {
                             $rena = mb_substr(urldecode($data[$i]),0,16,'utf-8')."...";
