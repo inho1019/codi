@@ -90,7 +90,7 @@
         } else {
             if(isset($_SESSION['activate'])) {
                 button("index.php?mode=write","tpbut","Write"); echo ' &nbsp ';
-                button("lodir.php","tpbut","Logout");
+                button("outdir.php","tpbut","Logout");
             } else {
                 button("index.php?mode=login","tpbut","Login");
             }

@@ -4,7 +4,6 @@
     $con->ssl_set(NULL, NULL, "ssl/cacert.pem", NULL, NULL);
     $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb', 
     'pscale_pw_W9alE0Qda7YzLuuyDJxL2HiOdnHVppey6OycKPTZrFY', 'codi');
-    if(!isset($_SESSION['activate'])) {
     $account = mysqli_fetch_assoc(mysqli_query($con,"select password from users where id = '".$_POST['id']."'"));
     if(isset($account)) {
         if ($account['password'] == $_POST['password']) {
@@ -20,12 +19,5 @@
     } else {
         header('Location: index.php?mode=login&error=0');
     }
-} else {
-    unset($_SESSION['activate']);
-    echo '<script>
-                alert("Logout Success");
-                location.href = "index.php";
-            </script>';
-}
 $con->close();
 ?>
