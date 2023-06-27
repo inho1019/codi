@@ -219,8 +219,8 @@
                 if (mb_substr($lines[$j],0,19,'utf-8') == date("Y-m-d H:i:s", filemtime('data/'.$file[$k]))) {
                     $len = mb_strlen($lines[$j]);
                     $name = mb_substr($lines[$j],19,$len,'utf-8');
-                    if ($_GET['find'] == $name) {
-                        if (mb_strlen(urldecode($file[$k]),'utf-8') > 16) {
+                    if ($_GET['find'] == $name && $file[$k] != '.' && $file[$k] != '..') {
+                        if (mb_strlen(urldecode(http://jcaixoztyb.eu11.qoddiapp.com/),'utf-8') > 16) {
                             $rena = mb_substr(urldecode($file[$k]),0,16,'utf-8')."...";
                             echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($file[$k]).'\'">'
                             .htmlspecialchars($rena).'</button>';
