@@ -64,61 +64,61 @@
     }
     function abc() {
         $data = scandir('data/');
-                    if (isset($_GET['sort'])) {
-                    for($i = 0;$i < count($data);$i++) {
-                        if($data[$i] != '.' && $data[$i] != '..') {
-                            $date = file_get_contents('lib/fileinfo');
-                            $lines = explode("\n", $date);
-                            $writer = 'Unknown';
-                            for ($j = 0;$j < count($lines);$j++) {
-                                $time = date("Y-m-d H:i:s", filemtime('data/'.$data[$i]));
-                                if (mb_substr($lines[$j],0,19,'utf-8') == $time) {
-                                    $long = mb_strlen($lines[$j],'utf-8');
-                                    $writer =  mb_substr($lines[$j],19,$long,'utf-8');
-                                }
-                            }
-                            if (mb_strlen(urldecode($data[$i]),'utf-8') > 16) {
-                                $rena = mb_substr(urldecode($data[$i]),0,16,'utf-8')."...";
-                                echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($data[$i]).'\'">'.htmlspecialchars($rena).
-                                '<br><span class="smwr"><b>BY | </b> '.$writer.'</span></button>';
-                            } else {
-                                echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($data[$i]).'\'">'.
-                                htmlspecialchars(urldecode($data[$i])).'<br><span class="smwr"><b>BY | </b> '.$writer.'</span></button>';
-                            }
-                        }
-                    }
-                } else {
-                    $timesort = array();
-                    for ($i = 0;$i < count($data);$i++) {
-                        if($data[$i] != '.' && $data[$i] != '..') {
-                            $time = date("Y-m-d H:i:s", filemtime('data/'.$data[$i]));
-                            array_push($timesort,$time.$data[$i]);
-                        }
-                    }
-                    rsort($timesort);
-                    for ($i = 0;$i < count($timesort);$i++) {
-                        $date = file_get_contents('lib/fileinfo');
-                        $lines = explode("\n", $date);
-                        $writer = 'Unknown';
-                        $time = mb_substr($timesort[$i],0,19,'utf-8');
-                        for ($j = 0;$j < count($lines);$j++) {
-                            if (mb_substr($lines[$j],0,19,'utf-8') == $time) {
-                                $long = mb_strlen($lines[$j],'utf-8');
-                                $writer =  mb_substr($lines[$j],19,$long,'utf-8');
-                            }
-                        }
-                        $timelen = mb_strlen($timesort[$i],'utf-8');
-                        $timedata = mb_substr($timesort[$i],19,$timelen,'utf-8');
-                        if (mb_strlen(urldecode($timedata),'utf-8') > 16) {
-                            $rena = mb_substr(urldecode($timedata),0,16,'utf-8')."...";
-                            echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($timedata).'\'">'
-                            .htmlspecialchars($rena).'<br><span class="smwr"><b>BY | </b> '.$writer.'</button>';
-                        } else {
-                            echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($timedata).'\'">'.
-                            htmlspecialchars(urldecode($timedata)).'<br><span class="smwr"><b>BY | </b> '.$writer.'</button>';
-                        }
+        if (isset($_GET['sort'])) {
+        for($i = 0;$i < count($data);$i++) {
+            if($data[$i] != '.' && $data[$i] != '..') {
+                $date = file_get_contents('lib/fileinfo');
+                $lines = explode("\n", $date);
+                $writer = 'Unknown';
+                for ($j = 0;$j < count($lines);$j++) {
+                    $time = date("Y-m-d H:i:s", filemtime('data/'.$data[$i]));
+                    if (mb_substr($lines[$j],0,19,'utf-8') == $time) {
+                        $long = mb_strlen($lines[$j],'utf-8');
+                        $writer =  mb_substr($lines[$j],19,$long,'utf-8');
                     }
                 }
+                if (mb_strlen(urldecode($data[$i]),'utf-8') > 16) {
+                    $rena = mb_substr(urldecode($data[$i]),0,16,'utf-8')."...";
+                    echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($data[$i]).'\'">'.htmlspecialchars($rena).
+                    '<br><span class="smwr"><b>BY | </b> '.$writer.'</span></button>';
+                } else {
+                    echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($data[$i]).'\'">'.
+                    htmlspecialchars(urldecode($data[$i])).'<br><span class="smwr"><b>BY | </b> '.$writer.'</span></button>';
+                }
+            }
+        }
+    } else {
+        $timesort = array();
+        for ($i = 0;$i < count($data);$i++) {
+            if($data[$i] != '.' && $data[$i] != '..') {
+                $time = date("Y-m-d H:i:s", filemtime('data/'.$data[$i]));
+                array_push($timesort,$time.$data[$i]);
+            }
+        }
+        rsort($timesort);
+        for ($i = 0;$i < count($timesort);$i++) {
+            $date = file_get_contents('lib/fileinfo');
+            $lines = explode("\n", $date);
+            $writer = 'Unknown';
+            $time = mb_substr($timesort[$i],0,19,'utf-8');
+            for ($j = 0;$j < count($lines);$j++) {
+                if (mb_substr($lines[$j],0,19,'utf-8') == $time) {
+                    $long = mb_strlen($lines[$j],'utf-8');
+                    $writer =  mb_substr($lines[$j],19,$long,'utf-8');
+                }
+            }
+            $timelen = mb_strlen($timesort[$i],'utf-8');
+            $timedata = mb_substr($timesort[$i],19,$timelen,'utf-8');
+            if (mb_strlen(urldecode($timedata),'utf-8') > 16) {
+                $rena = mb_substr(urldecode($timedata),0,16,'utf-8')."...";
+                echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($timedata).'\'">'
+                .htmlspecialchars($rena).'<br><span class="smwr"><b>BY | </b> '.$writer.'</button>';
+            } else {
+                echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($timedata).'\'">'.
+                htmlspecialchars(urldecode($timedata)).'<br><span class="smwr"><b>BY | </b> '.$writer.'</button>';
+            }
+        }
+    }
     }
     function direct($rename,$link,$sel) {
         if(!empty($_POST['title']) && !empty($_POST['explain']) && 
@@ -181,12 +181,12 @@
         echo '</form>';
                     }
                     
-    function searchform() {                
+    function searchform($mode,$submit) {                
         echo "
                 <form class='searchform' action='index.php' method='get'>
-                    <input type='hidden' name='mode' value='search'>
+                    <input type='hidden' name='mode' value=$mode>
                     <input id='scbox' type='text' name='find'>
-                    <button id='searchbutton' type='submit'>Search</button>
+                    <button id='searchbutton' type='submit'>$submit</button>
                 </form>
             ";
     }
@@ -209,4 +209,31 @@
             echo '<option value="' . $seldata[$i] . '">' . $seldata[$i+1] . '</option>';                
         }
     }
+    function user() {
+         if(isset($_GET['find']) && trim($_GET['find']) != '') {
+        $date = file_get_contents('lib/fileinfo');
+        $lines = explode("\n", $date);
+        $file = scandir('data/');
+        for ($j = 0;$j < count($lines);$j++) {
+            for ($k = 0;$k < count($file);$k++){
+                if (mb_substr($lines[$j],0,19,'utf-8') == date("Y-m-d H:i:s", filemtime('data/'.$file[$k]))) {
+                    $len = mb_strlen($lines[$j]);
+                    $name = mb_substr($lines[$j],19,$len,'utf-8');
+                    if ($_GET['find'] == $name) {
+                        if (mb_strlen(urldecode($file[$k]),'utf-8') > 16) {
+                            $rena = mb_substr(urldecode($file[$k]),0,16,'utf-8')."...";
+                            echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($file[$k]).'\'">'
+                            .htmlspecialchars($rena).'</button>';
+                        } else {
+                            echo '<button class="box" onclick="location.href=\'index.php?mode=read&file='.urlencode($file[$k]).'\'">'.
+                            htmlspecialchars(urldecode($file[$k])).'</button>';
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        echo "<div class='searchtext'>SEARCH USER ID</div>";
+    }
+}
 ?>

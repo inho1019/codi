@@ -33,9 +33,9 @@
                 }
             }
             if(isset($_SESSION['activate'])) {
-                echo "<div class='user'>
+                echo "<button class='user' onclick=\"location.href='index.php?mode=user&find=".$_SESSION['activate']['id']."'\">
                     <span><b> USER</b></span><span>".$_SESSION['activate']['name']."</span>
-                </div>";
+                </button>";
             }
     ?>
     <br>
@@ -46,21 +46,34 @@
             } else if ($_GET['mode'] == 'read') {
                 button("index.php","tpbut","Back"); echo ' &nbsp ';
                 if(isset($_SESSION['activate'])) {
+                $date = file_get_contents('lib/fileinfo');
+                $lines = explode("\n", $date);
+                $time = date("Y-m-d H:i:s", filemtime('data/'.$_GET['file']));
+                $writer = 'Unknown';
+                for ($j = 0;$j < count($lines);$j++) {
+                    if (mb_substr($lines[$j],0,19,'utf-8') == $time) {
+                        $long = mb_strlen($lines[$j],'utf-8');
+                        $writer =  mb_substr($lines[$j],19,$long,'utf-8');
+                    }
+                }
+                if ($writer == $_SESSION['activate']['id'] || $_SESSION['activate']['id'] == 'admin') {
                 button("dedir.php?file=".urlencode($_GET['file'])."","tpbut","Delete"); echo ' &nbsp ';
                 button("index.php?mode=update&file=".urlencode($_GET['file'])."","tpbut","Modify");
+                }
                 }
             } else if ($_GET['mode'] == 'update') {
                 button("index.php?mode=read&file=".urlencode($_GET['file'])."","tpbut","Back");
             } else if ($_GET['mode'] == 'search') {
-                button("index.php","tpbut","Back");
+                button("index.php","tpbut","Back"); echo ' &nbsp ';
+                button("index.php?mode=user","tpbut","User");
                 echo '<form id="selform" action="index.php" method="get"> 
                 <input type="hidden" name="mode" value="search">
                 <input type="hidden" name="sel" value="0">
                 <select class="sel" name="find" onchange="submitForm();">
                 <option selected disabled>None</option>';
                 wrselect();
-            echo '</select></form>';
-                searchform();
+                echo '</select></form>';
+                searchform('search','search');
             } else if ($_GET['mode'] == 'trash') {
                 button("index.php","tpbut","Back");
             } else if ($_GET['mode'] == 'register') {
@@ -69,6 +82,10 @@
             } else if ($_GET['mode'] == 'login') {
                 button("index.php","tpbut","Back"); echo ' &nbsp ';
                 button("index.php?mode=register","tpbut","Register");
+            } else if ($_GET['mode'] == 'user') {
+                button("index.php","tpbut","Back"); echo ' &nbsp ';
+                button("index.php?mode=search","tpbut","Search");
+                searchform('user','User ID');
             }
         } else {
             if(isset($_SESSION['activate'])) {
@@ -88,13 +105,15 @@
                 <select class="sel" name="find" onchange="submitForm();">
                 <option selected disabled>None</option>';
                 wrselect();
-            echo '</select></form>';
-            searchform();
+                echo '</select></form>';
+            searchform('search','search');
         }
     ?>
     <fieldset style=" 
     <?php
     if (!isset($_GET['mode'])) {
+        echo "text-align:center;";
+    } else if ($_GET['mode'] == 'search' || $_GET['mode'] == 'user') {
         echo "text-align:center;";
     }
     ?>">
@@ -136,10 +155,22 @@
                         read();
                     } else if ($_GET['mode'] == 'update') {
                         if(isset($_SESSION['activate'])) {
-                            echo '<form action="updir.php" method="post" enctype="multipart/form-data">';
-                            form(urldecode($_GET['file']),urldecode(
-                            file_get_contents('data/'.$_GET['file'])),"Modify",$_GET['file'],null);
-                            echo '</form>';
+                            $date = file_get_contents('lib/fileinfo');
+                            $lines = explode("\n", $date);
+                            $time = date("Y-m-d H:i:s", filemtime('data/'.$_GET['file']));
+                            $writer = 'Unknown';
+                            for ($j = 0;$j < count($lines);$j++) {
+                                if (mb_substr($lines[$j],0,19,'utf-8') == $time) {
+                                    $long = mb_strlen($lines[$j],'utf-8');
+                                    $writer =  mb_substr($lines[$j],19,$long,'utf-8');
+                                }
+                            }
+                            if ($writer == $_SESSION['activate']['id'] || $_SESSION['activate']['id'] == 'admin') {
+                                echo '<form action="updir.php" method="post" enctype="multipart/form-data">';
+                                form(urldecode($_GET['file']),urldecode(
+                                file_get_contents('data/'.$_GET['file'])),"Modify",$_GET['file'],null);
+                                echo '</form>';
+                            }
                         }
                     } else if ($_GET['mode'] == 'search') {
                         findsys();
@@ -153,6 +184,8 @@
                         </li>",'REGISTER','required');
                     } else if ($_GET['mode'] == 'login') {
                         loreform('lodir.php',null,'LOGIN',null);
+                    } else if ($_GET['mode'] == 'user') {
+                        user();
                     }
                 } else {
                     abc();
