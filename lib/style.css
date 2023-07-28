@@ -193,10 +193,6 @@ textarea {
     padding-top: 5px;
     padding-bottom: 5px;
 }
-input:invalid {
-    border: 3px dashed lightpink;
-    border-radius: 5px;
-}
 .user {
     left: 79%;
     width: 20%;
@@ -208,7 +204,7 @@ input:invalid {
     border-radius: 3px;
     font-size: 12px;
     background-color: white;
-    margin-top: 30px;
+    margin-top: 20px;
     padding: 1px;
     padding-top: 3px;
 }
@@ -219,6 +215,10 @@ input:invalid {
 .writer {
     float: right;
     border-bottom: 2px solid black;
+}
+.date {
+    float: right;
+    font-size: 12px;
 }
 .smwr {
     font-size: 10px;
@@ -234,6 +234,11 @@ input:invalid {
 #filebut {
     margin-top: 15px;
     margin-left: 10px;
+}
+#selform {
+    margin-top:60px;
+    margin-right: 2vw;
+    float: right;
 }
 @media(max-width: 576px) {
     .searchform {
