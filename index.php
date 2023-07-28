@@ -33,7 +33,7 @@
                 }
             }
             if(isset($_SESSION['activate'])) {
-                echo "<button class='user' onclick=\"location.href='index.php?mode=user&find=".$_SESSION['activate']['id']."'\">
+                echo "<button class='user' onclick=\"location.href='index.php?tab=&mode=search&kind=user&find=".$_SESSION['activate']['id']."'\">
                     <span><b> USER</b></span><span>".$_SESSION['activate']['name']."</span>
                 </button>";
             }
@@ -44,36 +44,50 @@
             if ($_GET['mode'] == 'write') {
                 button("index.php","tpbut","Cancel");
             } else if ($_GET['mode'] == 'read') {
-                button("index.php","tpbut","Back"); echo ' &nbsp ';
+                $con = mysqli_init();
+                $con->ssl_set(NULL, NULL, "ssl/cacert.pem", NULL, NULL);
+                $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb', 
+                'pscale_pw_W9alE0Qda7YzLuuyDJxL2HiOdnHVppey6OycKPTZrFY', 'codi');
+                button("javascript:history.back()","tpbut","Back"); echo ' &nbsp ';
                 if(isset($_SESSION['activate'])) {
-                $date = file_get_contents('lib/fileinfo');
-                $lines = explode("\n", $date);
-                $time = date("Y-m-d H:i:s", filemtime('data/'.$_GET['file']));
-                $writer = 'Unknown';
-                for ($j = 0;$j < count($lines);$j++) {
-                    if (mb_substr($lines[$j],0,19,'utf-8') == $time) {
-                        $long = mb_strlen($lines[$j],'utf-8');
-                        $writer =  mb_substr($lines[$j],19,$long,'utf-8');
-                    }
-                }
-                if ($writer == $_SESSION['activate']['id'] || $_SESSION['activate']['id'] == 'admin') {
-                button("dedir.php?file=".urlencode($_GET['file'])."","tpbut","Delete"); echo ' &nbsp ';
-                button("index.php?mode=update&file=".urlencode($_GET['file'])."","tpbut","Modify");
+                $id = mysqli_fetch_assoc(mysqli_query($con,"select id from file where num = ".$_GET["file"]));
+                if ($id['id'] == $_SESSION['activate']['id'] || $_SESSION['activate']['id'] == 'admin') {
+                button("dedir.php?file=".$_GET['file']."","tpbut","Delete"); echo ' &nbsp ';
+                button("index.php?mode=update&file=".$_GET['file']."","tpbut","Modify");
                 }
                 }
+                $con->close();
             } else if ($_GET['mode'] == 'update') {
-                button("index.php?mode=read&file=".urlencode($_GET['file'])."","tpbut","Back");
+                button("javascript:history.back()","tpbut","Back");
             } else if ($_GET['mode'] == 'search') {
-                button("index.php","tpbut","Back"); echo ' &nbsp ';
-                button("index.php?mode=user","tpbut","User");
-                echo '<form id="selform" action="index.php" method="get"> 
+                $kind = null;
+                $find = null;
+                $tab = null;
+                $none = "None";
+                if (isset($_GET['kind'])){
+                    $kind = $_GET["kind"];
+                    $find = $_GET["find"];
+                }
+                if (isset($_GET['tab'])) {
+                    $tab = $_GET['tab'];
+                    $data = file_get_contents('lib/select');
+                    $seldata = explode("\n", $data);
+                    for($i = 0;$i < count($seldata);$i += 2) {
+                        if (preg_replace('/[^a-zA-Z]/', '', $_GET['tab']) == preg_replace('/[^a-zA-Z]/', '', $seldata[$i])) {
+                            $none = $seldata[$i+1];
+                        }
+                    }
+                } 
+                button("javascript:history.back()","tpbut","Back"); echo ' &nbsp ';
+                echo '<form id="selform" action="index.php" method="get">
                 <input type="hidden" name="mode" value="search">
-                <input type="hidden" name="sel" value="0">
-                <select class="sel" name="find" onchange="submitForm();">
-                <option selected disabled>None</option>';
+                <input type="hidden" name="kind" value="'.$kind.'">
+                <input type="hidden" name="find" value="'.$find.'">
+                <select class="sel" name="tab" onchange="submitForm();">
+                <option selected disabled>'.$none.'</option>';
                 wrselect();
                 echo '</select></form>';
-                searchform('search','search');
+                searchform('search',"<input type='hidden' name='tab' value=".$tab.">");
             } else if ($_GET['mode'] == 'trash') {
                 button("index.php","tpbut","Back");
             } else if ($_GET['mode'] == 'register') {
@@ -82,11 +96,7 @@
             } else if ($_GET['mode'] == 'login') {
                 button("index.php","tpbut","Back"); echo ' &nbsp ';
                 button("index.php?mode=register","tpbut","Register");
-            } else if ($_GET['mode'] == 'user') {
-                button("index.php","tpbut","Back"); echo ' &nbsp ';
-                button("index.php?mode=search","tpbut","Search");
-                searchform('user','User ID');
-            }
+            } 
         } else {
             if(isset($_SESSION['activate'])) {
                 button("index.php?mode=write","tpbut","Write"); echo ' &nbsp ';
@@ -94,19 +104,15 @@
             } else {
                 button("index.php?mode=login","tpbut","Login");
             }
-            if (isset($_GET['sort'])) {
-                button("index.php","stbut","Abc");
-            } else {
-                button("index.php?sort=abc","stbut","Date");
-            }
-            echo '<form id="selform" action="index.php" method="get"> 
+            echo '<form id="selform" action="index.php" method="get">
                 <input type="hidden" name="mode" value="search">
-                <input type="hidden" name="sel" value="0">
-                <select class="sel" name="find" onchange="submitForm();">
+                <input type="hidden" name="kind" value="">
+                <input type="hidden" name="find" value="">
+                <select class="sel" name="tab" onchange="submitForm();">
                 <option selected disabled>None</option>';
-                wrselect();
-                echo '</select></form>';
-            searchform('search','search');
+            wrselect();
+            echo '</select></form>';
+            searchform('search',null);
         }
     ?>
     <fieldset style=" 
@@ -141,54 +147,61 @@
                 if(isset($_GET['mode'])) {
                     if($_GET['mode'] == 'write') {
                         if(isset($_SESSION['activate'])) {
+                            $title = null;
+                            $exp = null;
+                            if(isset($_GET["trash"])) {
+                                $con = mysqli_init();
+                                $con->ssl_set(NULL, NULL, "ssl/cacert.pem", NULL, NULL);
+                                $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb', 
+                                'pscale_pw_W9alE0Qda7YzLuuyDJxL2HiOdnHVppey6OycKPTZrFY', 'codi');
+                                $data = mysqli_fetch_assoc(mysqli_query($con,"select * from trash where num = ".$_GET["trash"]));
+                                $title = urldecode($data["title"]);
+                                $exp = str_replace('___',' ',urldecode($data["exp"]));
+                                $con->close();
+                            }
                             echo '<form action="redir.php" method="post" enctype="multipart/form-data"> 
                             <select name="sel">
-                            <option value="[--] ">None</option>';
+                            <option value="-- |">None</option>';
                             wrselect();
                             echo '</select><br>';
-                            form(null,null,"Post",null,
-                            '<input id="filebut" type="file" name="file" accept=".png, .jpg, .jpeg, .gif">');
+                            form($title,$exp,"Post",null,);
                             echo '</form>';
-
                         }
                     } else if ($_GET['mode'] == 'read') {
-                        read();
+                        readsql($_GET['file']);
                     } else if ($_GET['mode'] == 'update') {
-                        if(isset($_SESSION['activate'])) {
-                            $date = file_get_contents('lib/fileinfo');
-                            $lines = explode("\n", $date);
-                            $time = date("Y-m-d H:i:s", filemtime('data/'.$_GET['file']));
-                            $writer = 'Unknown';
-                            for ($j = 0;$j < count($lines);$j++) {
-                                if (mb_substr($lines[$j],0,19,'utf-8') == $time) {
-                                    $long = mb_strlen($lines[$j],'utf-8');
-                                    $writer =  mb_substr($lines[$j],19,$long,'utf-8');
+                        $con = mysqli_init();
+                        $con->ssl_set(NULL, NULL, "ssl/cacert.pem", NULL, NULL);
+                        $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb', 
+                        'pscale_pw_W9alE0Qda7YzLuuyDJxL2HiOdnHVppey6OycKPTZrFY', 'codi');
+                            if(isset($_SESSION['activate'])) {
+                                $file = mysqli_fetch_assoc(mysqli_query($con,"select * from file where num = ".$_GET["file"]));
+                                if ($file["id"] == $_SESSION['activate']['id'] || $_SESSION['activate']['id'] == 'admin') {
+                                    echo '<form action="updir.php" method="post" enctype="multipart/form-data"> 
+                                    <select name="sel">
+                                    <option value="-- |">None</option>';
+                                    wrselect();
+                                    echo '</select><br>';
+                                    form($file["title"],str_replace('___',' ',$file["exp"]),"Modify",$_GET['file']);
+                                    echo '</form>';
                                 }
                             }
-                            if ($writer == $_SESSION['activate']['id'] || $_SESSION['activate']['id'] == 'admin') {
-                                echo '<form action="updir.php" method="post" enctype="multipart/form-data">';
-                                form(urldecode($_GET['file']),urldecode(
-                                file_get_contents('data/'.$_GET['file'])),"Modify",$_GET['file'],null);
-                                echo '</form>';
-                            }
-                        }
+                        $con->close();
                     } else if ($_GET['mode'] == 'search') {
-                        findsys();
+                        searchsql();
                     } else if ($_GET['mode'] == 'trash') {
                         if(isset($_SESSION['activate'])) {
-                            trash();
+                            trashsql();
                         }
                     } else if ($_GET['mode'] == 'register') {
                         loreform('indir.php',"<li>NICKNAME<br><input type='text' name='nickname' 
-                        pattern='^[a-zA-Zㄱ-힣0-9]*$' maxlength='16' minlength='4' required>
+                        pattern='^[a-zA-Zㄱ-힣0-9]*$' maxlength='16' minlength='2' required>
                         </li>",'REGISTER','required');
                     } else if ($_GET['mode'] == 'login') {
-                        loreform('lodir.php',null,'LOGIN',null);
-                    } else if ($_GET['mode'] == 'user') {
-                        user();
-                    }
+                        loreform('lodir.php',null,'LOGIN','required');
+                    } 
                 } else {
-                    abc();
+                    sortsql();
                 }
             ?>
     </fieldset>

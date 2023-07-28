@@ -19,15 +19,19 @@
     ]);
     session_start();
     require('lib/function.php');
-    direct(null,'?mode=write',urlencode($_POST['sel']));
-    if (isset($_FILES['file'])) {
-        $result = $awClient->putObject([
-            'Bucket' => $bucketName,
-            'Key' => $_FILES['file']['name'],
-            'SourceFile' => $_FILES['file']['tmp_name'],
-        ]);
-        file_put_contents('data/'.urlencode($_POST['sel']).urlencode($_POST['title']),
-        "\n\n\nSource (Don't Modify Link) : \n".$result['ObjectURL'], FILE_APPEND);
-        file_put_contents('lib/fileinfo',date("Y-m-d H:i:s").$_SESSION['activate']['id']."\n", FILE_APPEND);
-    }
+    if(!empty($_POST['title']) && !empty($_POST['explain']) && 
+    trim($_POST['title']) != '' && trim($_POST['explain']) != '') {
+        if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+            $result = $awClient->putObject([
+                'Bucket' => $bucketName,
+                'Key' => $_FILES['file']['name'],
+                'SourceFile' => $_FILES['file']['tmp_name'],
+            ]);
+            insertsql($result['ObjectURL']);
+        } else {
+            insertsql(null);
+        } 
+    } else {
+        header('Location: index.php?mode=write&error=0');
+    } 
 ?>
