@@ -242,7 +242,7 @@ textarea {
 }
 @media(max-width: 576px) {
     .searchform {
-        width: 70%;
+        width: 85%;
         left: 0%;
     }
     .tpbut {
