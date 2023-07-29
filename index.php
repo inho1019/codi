@@ -161,7 +161,7 @@
                             }
                             echo '<form action="redir.php" method="post" enctype="multipart/form-data"> 
                             <select name="sel">
-                            <option value="-- |">None</option>';
+                            <option value="[--]">None</option>';
                             wrselect();
                             echo '</select><br>';
                             form($title,$exp,"Post",null,);
@@ -179,7 +179,7 @@
                                 if ($file["id"] == $_SESSION['activate']['id'] || $_SESSION['activate']['id'] == 'admin') {
                                     echo '<form action="updir.php" method="post" enctype="multipart/form-data"> 
                                     <select name="sel">
-                                    <option value="-- |">None</option>';
+                                    <option value="[--]">None</option>';
                                     wrselect();
                                     echo '</select><br>';
                                     form($file["title"],str_replace('___',' ',$file["exp"]),"Modify",$_GET['file']);
