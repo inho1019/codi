@@ -7,11 +7,8 @@
 <a href="index.php">MAIN</a><br><br>
 <form action='admin.php' method='post'>
 <?php
-$con = mysqli_init();
-$con->ssl_set(NULL, NULL, "ssl/cacert.pem", NULL, NULL);
-$con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb', 
-    'pscale_pw_W9alE0Qda7YzLuuyDJxL2HiOdnHVppey6OycKPTZrFY', 'codi');
-    session_start();
+require('lib/function.php');
+global $con;
     if ($_SESSION['activate']['name'] == 'admin' && $_SESSION['activate']['id'] == 'admin') {
         $account = mysqli_fetch_all(mysqli_query($con,"select name,id from users"), MYSQLI_ASSOC);
         if (isset($_POST['id'])) {    
@@ -26,7 +23,6 @@ $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb',
         }
         echo "<button type='submit'>Delete</button>";
     }
-    $con->close();
 ?>
 </form>
 

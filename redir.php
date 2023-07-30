@@ -1,23 +1,4 @@
 <?php 
-    require 'vendor/autoload.php';
-
-    use Aws\S3\S3Client;
-    use Aws\S3\Exception\S3Exception;
-
-    $bucketName = 'codingdiary';
-    $accessKeyId = 'AKIAXPHWSBHLWATBGOMJ';
-    $secretAccessKey = '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';
-    $region = 'eu-west-2';
-
-    $awClient = new S3Client([
-        'version' => 'latest',
-        'region' => $region,
-        'credentials' => [
-            'key' => $accessKeyId,
-            'secret' => $secretAccessKey,
-        ],
-    ]);
-    session_start();
     require('lib/function.php');
     if(!empty($_POST['title']) && !empty($_POST['explain']) && 
     trim($_POST['title']) != '' && trim($_POST['explain']) != '') {

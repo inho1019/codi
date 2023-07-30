@@ -1,8 +1,6 @@
 <?php
-    $con = mysqli_init();
-    $con->ssl_set(NULL, NULL, "ssl/cacert.pem", NULL, NULL);
-    $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb', 
-    'pscale_pw_W9alE0Qda7YzLuuyDJxL2HiOdnHVppey6OycKPTZrFY', 'codi');
+    require('lib/function.php');
+    global $con;
     $duname = mysqli_fetch_assoc(mysqli_query($con,"select name from users where name = '".$_POST['nickname']."'"));
     $duid = mysqli_fetch_assoc(mysqli_query($con,"select id from users where id = '".$_POST['id']."'"));
     if (!isset($duname) && !isset($duid)) {
@@ -19,5 +17,4 @@
     } else {
         header('Location: index.php?mode=register&error=1');
     };
-    $con->close();
 ?>

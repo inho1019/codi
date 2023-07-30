@@ -1,9 +1,6 @@
 <?php
-    session_start();
-    $con = mysqli_init();
-    $con->ssl_set(NULL, NULL, "ssl/cacert.pem", NULL, NULL);
-    $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb', 
-    'pscale_pw_W9alE0Qda7YzLuuyDJxL2HiOdnHVppey6OycKPTZrFY', 'codi');
+    require('lib/function.php');
+    global $con;
     $account = mysqli_fetch_assoc(mysqli_query($con,"select password from users where id = '".$_POST['id']."'"));
     if(isset($account)) {
         if ($account['password'] == $_POST['password']) {
@@ -19,5 +16,4 @@
     } else {
         header('Location: index.php?mode=login&error=0');
     }
-$con->close();
 ?>

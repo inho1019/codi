@@ -6,7 +6,6 @@
     <meta name="HandheldFriendly" content="true" />
     <title>Coding Diary</title>
     <?php
-        session_start();
         require('lib/function.php');
     ?>
     <link rel="stylesheet" href="lib/style.css" type="text/css">
@@ -44,10 +43,7 @@
             if ($_GET['mode'] == 'write') {
                 button("index.php","tpbut","Cancel");
             } else if ($_GET['mode'] == 'read') {
-                $con = mysqli_init();
-                $con->ssl_set(NULL, NULL, "ssl/cacert.pem", NULL, NULL);
-                $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb', 
-                'pscale_pw_W9alE0Qda7YzLuuyDJxL2HiOdnHVppey6OycKPTZrFY', 'codi');
+                global $con;
                 button("javascript:history.back()","tpbut","Back"); echo ' &nbsp ';
                 if(isset($_SESSION['activate'])) {
                 $id = mysqli_fetch_assoc(mysqli_query($con,"select id from file where num = ".$_GET["file"]));
@@ -56,7 +52,6 @@
                 button("index.php?mode=update&file=".$_GET['file']."","tpbut","Modify");
                 }
                 }
-                $con->close();
             } else if ($_GET['mode'] == 'update') {
                 button("javascript:history.back()","tpbut","Back");
             } else if ($_GET['mode'] == 'search') {
@@ -150,14 +145,10 @@
                             $title = null;
                             $exp = null;
                             if(isset($_GET["trash"])) {
-                                $con = mysqli_init();
-                                $con->ssl_set(NULL, NULL, "ssl/cacert.pem", NULL, NULL);
-                                $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb', 
-                                'pscale_pw_W9alE0Qda7YzLuuyDJxL2HiOdnHVppey6OycKPTZrFY', 'codi');
+                                global $con;
                                 $data = mysqli_fetch_assoc(mysqli_query($con,"select * from trash where num = ".$_GET["trash"]));
                                 $title = urldecode($data["title"]);
                                 $exp = str_replace('___',' ',urldecode($data["exp"]));
-                                $con->close();
                             }
                             echo '<form action="redir.php" method="post" enctype="multipart/form-data"> 
                             <select name="sel">
@@ -170,10 +161,7 @@
                     } else if ($_GET['mode'] == 'read') {
                         readsql($_GET['file']);
                     } else if ($_GET['mode'] == 'update') {
-                        $con = mysqli_init();
-                        $con->ssl_set(NULL, NULL, "ssl/cacert.pem", NULL, NULL);
-                        $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb', 
-                        'pscale_pw_W9alE0Qda7YzLuuyDJxL2HiOdnHVppey6OycKPTZrFY', 'codi');
+                            global $con;
                             if(isset($_SESSION['activate'])) {
                                 $file = mysqli_fetch_assoc(mysqli_query($con,"select * from file where num = ".$_GET["file"]));
                                 if ($file["id"] == $_SESSION['activate']['id'] || $_SESSION['activate']['id'] == 'admin') {
@@ -186,7 +174,6 @@
                                     echo '</form>';
                                 }
                             }
-                        $con->close();
                     } else if ($_GET['mode'] == 'search') {
                         searchsql();
                     } else if ($_GET['mode'] == 'trash') {
