@@ -1,4 +1,6 @@
 <?php
+    //세션
+    session_start();
     //이미지업로드 소스
     require 'vendor/autoload.php';
 
@@ -19,6 +21,13 @@
         ],
     ]);
     //aws s3
+    //sql 연결
+    global $con;
+        $con = mysqli_init();
+        $con->ssl_set(NULL, NULL, "ssl/cacert.pem", NULL, NULL);
+        $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb', 
+        'pscale_pw_W9alE0Qda7YzLuuyDJxL2HiOdnHVppey6OycKPTZrFY', 'codi');
+    //
     function form($val1,$val2,$submit,$hidden) {
         echo ' <input type="hidden" value="'.$hidden.'" name="file">
                 <label id="title" for="title">TITLE </label>
@@ -66,23 +75,16 @@
         }
     }
     function insertsql($file) {
-            $con = mysqli_init();
-            $con->ssl_set(NULL, NULL, "ssl/cacert.pem", NULL, NULL);
-            $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb', 
-            'pscale_pw_W9alE0Qda7YzLuuyDJxL2HiOdnHVppey6OycKPTZrFY', 'codi');
+            global $con;
             mysqli_query($con,"insert into file (id, writer, title, exp, tab, link, time) 
             values ('".$_SESSION['activate']['id']."','".$_SESSION['activate']['name']."','"
             .mysqli_real_escape_string($con,$_POST['title'])."','"
             .mysqli_real_escape_string($con,str_replace('	','____________',str_replace(' ','___',$_POST['explain'])))."','"
             .$_POST['sel']."','".$file."',now() )");
             header('Location: index.php');
-            $con->close();
         } 
     function sortsql() {
-        $con = mysqli_init();
-        $con->ssl_set(NULL, NULL, "ssl/cacert.pem", NULL, NULL);
-        $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb', 
-        'pscale_pw_W9alE0Qda7YzLuuyDJxL2HiOdnHVppey6OycKPTZrFY', 'codi');
+        global $con;
         $data = mysqli_query($con,"select * from file");
         $writer = "Unknown";
         $filear = array();
@@ -103,13 +105,9 @@
                     }
             }
         }
-        $con->close();
     }
     function readsql($num) {
-        $con = mysqli_init();
-        $con->ssl_set(NULL, NULL, "ssl/cacert.pem", NULL, NULL);
-        $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb', 
-        'pscale_pw_W9alE0Qda7YzLuuyDJxL2HiOdnHVppey6OycKPTZrFY', 'codi');
+        global $con;
         $data = mysqli_fetch_assoc(mysqli_query($con,"select * from file where num = ".$num));
         $img = null;
         if($data["link"] != null) {
@@ -122,13 +120,9 @@
         <div id="reex">'.str_replace("___",htmlspecialchars_decode("&nbsp;"),nl2br(htmlspecialchars($data["exp"]))).'</div>
         <div class="date"><b>DATE</b> : '.$data["time"].'</div>'.
         $img;
-        $con->close();
     }
     function updatesql($file,$link) {
-        $con = mysqli_init();
-        $con->ssl_set(NULL, NULL, "ssl/cacert.pem", NULL, NULL);
-        $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb', 
-        'pscale_pw_W9alE0Qda7YzLuuyDJxL2HiOdnHVppey6OycKPTZrFY', 'codi');
+        global $con;
         $lfile = null;
         if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
             $lfile = "link = '".$file."' , ";
@@ -146,14 +140,10 @@
         } else {
             header('Location: index.php?mode=update&file='.$link.'&error=0');
         }
-        $con->close();
     }
     function trashsql() {
         $trash = 0;
-        $con = mysqli_init();
-        $con->ssl_set(NULL, NULL, "ssl/cacert.pem", NULL, NULL);
-        $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb', 
-        'pscale_pw_W9alE0Qda7YzLuuyDJxL2HiOdnHVppey6OycKPTZrFY', 'codi');
+        global $con;
         $data = mysqli_query($con,"select * from trash");
         echo '<form action="trdir.php" method="post">';
         while ($detail = mysqli_fetch_assoc($data)) {
@@ -170,14 +160,10 @@
             }
         }
         echo '</form>';
-        $con->close();
     }
     function searchsql() {
         $sw = 0;
-        $con = mysqli_init();
-        $con->ssl_set(NULL, NULL, "ssl/cacert.pem", NULL, NULL);
-        $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb', 
-        'pscale_pw_W9alE0Qda7YzLuuyDJxL2HiOdnHVppey6OycKPTZrFY', 'codi');
+        global $con;
         $kind = null;
         $tab = null;
         $find = null;
@@ -222,6 +208,5 @@
         if ($sw == 0) {
             echo "<div class='searchtext'>Nothing Found</div>"; 
         } 
-        $con->close();
     } 
 ?>

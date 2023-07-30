@@ -1,7 +1,23 @@
+@font-face {
+    font-family: 'NanumSquareNeo-Variable';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'LINESeedKR-Bd';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+* {
+    font-family: 'NanumSquareNeo-Variable';
+}
 body {
     background-color: floralwhite;
 }
 .title {
+    font-family: 'LINESeedKR-Bd';
     font-size: 40px;
     font-weight: bold;
     color: black;
@@ -58,6 +74,7 @@ fieldset {
     background-color: wheat;
     box-shadow: 0.8vw 0.8vw lightgray;
     vertical-align: top;
+    word-break: break-all;
 }
 .box:hover {
     background-color: burlywood;
