@@ -60,8 +60,8 @@
             <form class='register' action=$link method='post'>
                 <ul class='reli'>
                     $null
-                    <li>ID<br><input type='text' name='id' pattern='^[a-z0-9]*$' minlength='4' maxlength='16' $re></li>
-                    <li>PASSWORD<br><input type='password' name='password' pattern='^[a-zA-Z0-9]*$' minlength='4' maxlength='32' $re></li>
+                    <li>ID<br><input class='rein' type='text' name='id' pattern='^[a-z0-9]*$' minlength='4' maxlength='16' $re></li>
+                    <li>PASSWORD<br><input class='rein' type='password' name='password' pattern='^[a-zA-Z0-9]*$' minlength='4' maxlength='32' $re></li>
                     <li><button type='submit'>$submit</button></li>
                 </ul>
             </form>
