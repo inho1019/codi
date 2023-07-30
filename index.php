@@ -181,7 +181,7 @@
                             trashsql();
                         }
                     } else if ($_GET['mode'] == 'register') {
-                        loreform('indir.php',"<li>NICKNAME<br><input type='text' name='nickname' 
+                        loreform('indir.php',"<li>NICKNAME<br><input class='rein' type='text' name='nickname' 
                         pattern='^[a-zA-Zㄱ-힣0-9]*$' maxlength='16' minlength='2' required>
                         </li>",'REGISTER','required');
                     } else if ($_GET['mode'] == 'login') {
