@@ -220,7 +220,7 @@ textarea {
     border-radius: 3px;
     font-size: 12px;
     background-color: white;
-    margin-top: 20px;
+    margin-top: 10px;
     padding: 1px;
     padding-top: 3px;
 }
@@ -285,7 +285,7 @@ textarea {
     }
     .tpbut {
         margin-top: 30px;
-        margin-bottom: 30px;
+        margin-bottom: 26px;
         font-size: 15px;
         padding: 4px 12px 4px 12px;
     }
