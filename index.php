@@ -20,13 +20,13 @@
     <?php
             if (!isset($_GET['mode'])) {
                 if(isset($_SESSION['activate'])) {
-                button('index.php?mode=trash','trbut','Tr');
+                button('index.php?mode=trash','trbut','T');
                 }
             } else {
                 if ($_GET['mode'] == 'trash') {
                     if(isset($_SESSION['activate'])) {
                         if ($_SESSION['activate']['name'] == 'admin' && $_SESSION['activate']['id'] == 'admin') {
-                            button('admin.php','trbut','Ad');
+                            button('admin.php','trbut','A');
                         }
                     }
                 }
@@ -150,7 +150,7 @@
                                 $title = urldecode($data["title"]);
                                 $exp = str_replace('___',' ',urldecode($data["exp"]));
                             }
-                            echo '<form action="redir.php" method="post" enctype="multipart/form-data"> 
+                            echo '<form class="wrform" action="redir.php" method="post" enctype="multipart/form-data"> 
                             <select name="sel">
                             <option value="[--]">None</option>';
                             wrselect();
@@ -165,7 +165,7 @@
                             if(isset($_SESSION['activate'])) {
                                 $file = mysqli_fetch_assoc(mysqli_query($con,"select * from file where num = ".$_GET["file"]));
                                 if ($file["id"] == $_SESSION['activate']['id'] || $_SESSION['activate']['id'] == 'admin') {
-                                    echo '<form action="updir.php" method="post" enctype="multipart/form-data"> 
+                                    echo '<form class="wrform" action="updir.php" method="post" enctype="multipart/form-data"> 
                                     <select name="sel">
                                     <option value="[--]">None</option>';
                                     wrselect();
