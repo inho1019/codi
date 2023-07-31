@@ -134,7 +134,7 @@
         }
         echo '<div class="writer"><b>WRITER | </b>'.$data["writer"].'</div><br>
         <div id="reti">
-        <div><b>TITLE</b></div><div>'.htmlspecialchars($data["title"]).'</div>
+        <div><b>TITLE</b></div><div style="word-break: break-all;">'.htmlspecialchars($data["title"]).'</div>
         </div><br>
         <div id="reex">'.str_replace("___",htmlspecialchars_decode("&nbsp;"),nl2br(htmlspecialchars($data["exp"]))).'</div>
         <div class="date"><b>DATE</b> : '.$data["time"].'</div>'.
