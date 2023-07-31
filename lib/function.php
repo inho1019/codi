@@ -99,7 +99,7 @@
             values ('".$_SESSION['activate']['id']."','".$_SESSION['activate']['name']."','"
             .mysqli_real_escape_string($con,$_POST['title'])."','"
             .mysqli_real_escape_string($con,str_replace('	','____________',str_replace(' ','___',$_POST['explain'])))."','"
-            .$_POST['sel']."','".$file."',now() )");
+            .$_POST['sel']."','".$file."',DATE_ADD(NOW(), INTERVAL 9 HOUR) )");
             header('Location: index.php');
         } 
     function sortsql() {
@@ -153,7 +153,7 @@
             exp = '".mysqli_real_escape_string($con,str_replace('	','____________',str_replace(' ','___',$_POST['explain'])))."' ,  
             tab = '".$_POST['sel']."' ,
             ".$lfile." 
-            time = now()
+            time = DATE_ADD(NOW(), INTERVAL 9 HOUR)
             where num = ".$link."");
             header('Location: index.php');
         } else {
