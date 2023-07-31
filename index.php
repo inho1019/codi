@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,maximum-scale=1">
     <meta name="HandheldFriendly" content="true" />
+    <link rel="icon" href="https://codingdiary.s3.eu-west-2.amazonaws.com/icons8-diary-96.png">
     <title>Coding Diary</title>
     <?php
         require('lib/function.php');
