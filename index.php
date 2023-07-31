@@ -118,7 +118,7 @@
         echo "text-align:center;";
     }
     ?>">
-        <legend style="text-align: left;font-weight : bold; font-size: 30px;">
+        <legend style="text-align: left;font-weight : bold; font-size: 25px; border: 2px solid black; padding:3px 5px 3px 5px; margin-top:3px; border-radius:5px;">
             <?php
                 if(isset($_GET['mode'])) {
                     echo strtoupper($_GET['mode']);
