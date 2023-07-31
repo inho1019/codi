@@ -165,9 +165,19 @@
                             if(isset($_SESSION['activate'])) {
                                 $file = mysqli_fetch_assoc(mysqli_query($con,"select * from file where num = ".$_GET["file"]));
                                 if ($file["id"] == $_SESSION['activate']['id'] || $_SESSION['activate']['id'] == 'admin') {
+                                    $val = "[--]";
+                                    $txt = "None";
+                                    $data = file_get_contents('lib/select');
+                                    $seldata = explode("\n", $data);
+                                    for($i = 0;$i < count($seldata);$i += 2) {
+                                        if(substr($file['tab'],0,4) == substr($seldata[$i],0,4)) {
+                                            $val = substr($seldata[$i],0,4);
+                                            $txt = $seldata[$i+1] ;
+                                        }           
+                                    }
                                     echo '<form class="wrform" action="updir.php" method="post" enctype="multipart/form-data"> 
                                     <select name="sel">
-                                    <option value="[--]">None</option>';
+                                    <option value="'.$val.'">'.$txt.'</option>';
                                     wrselect();
                                     echo '</select><br>';
                                     form($file["title"],str_replace('___',' ',$file["exp"]),"Modify",$_GET['file']);
