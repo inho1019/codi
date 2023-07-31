@@ -28,8 +28,8 @@ body {
     color: black;
 }
 .tpbut {
-    margin-top: 34px;
-    margin-bottom: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
     font-size: 20px;
     padding: 4px 12px 4px 12px;
     border: 2px solid black;
@@ -45,7 +45,6 @@ body {
     width: 25px;
     height: 25px;
     float: right;
-    margin-top: 0px;
     border-radius: 10%;
     background-color: darkgray;
     border: solid black 1px;
@@ -260,14 +259,33 @@ textarea {
 .rein {
     width: 77%;
 }
+#file {
+    display: none;
+}
+#upload {
+    width: 100px;
+    height: 15px;
+    border: 1px solid black;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    padding-top: 2px;
+    margin-top: 10px;
+    font-size: 12px;
+    cursor: pointer;
+    text-align: center;
+}
+#upload:hover {
+    background-color: lightgrey;
+    transition: 0.3s ease-out;
+}
 @media(max-width: 576px) {
     .searchform {
         width: 85%;
         left: 0%;
     }
     .tpbut {
-        margin-top: 35px;
-        margin-bottom: 25px;
+        margin-top: 30px;
+        margin-bottom: 30px;
         font-size: 15px;
         padding: 4px 12px 4px 12px;
     }
@@ -296,7 +314,7 @@ textarea {
     }
     .trbut {
         font-size: 12px;
-        margin-top: 20px;
+        margin-top: 10px;
     }
     #scbox{
         width: 120px;

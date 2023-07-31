@@ -1,3 +1,18 @@
+<script>
+    function buttonx(link) {
+        var but = document.querySelectorAll("#but");
+        for(let i = 0;i < but.length;i++) {
+            but[i].disabled = true;
+        }
+        location.href=link;
+    }
+    function submitx() {
+        var but = document.querySelector(".submit");
+        var form = document.querySelector(".wrform");
+        but.disabled = true;
+        form.submit();
+    }
+</script>
 <?php
     //세션
     session_start();
@@ -33,12 +48,16 @@
                 <label id="title" for="title">TITLE </label>
                 <input class="txbox" type="text" name="title" value="'.$val1.'"><br><br>
                 <span id="explain">EXPLAIN</span><br>
-                <textarea name="explain" rows="10" style="resize:none; font-size:20px;">'.$val2.'</textarea>
-                <input id="filebut" type="file" name="file" accept=".png, .jpg, .jpeg, .gif">
-                <input class="submit" type="submit" value="'.$submit.'">';
+                <textarea class="exbox" name="explain" rows="10" style="resize:none; font-size:20px;">'.$val2.'</textarea>
+                <label for="file">
+                    <div id="upload">File Upload</div>
+                </label>
+                <input id="file" type="file" name="file" accept=".png, .jpg, .jpeg, .gif">
+                <button class="submit" type="submit" onclick="javascript:submitx()">'.$submit.'</button>
+                ';
     }
     function button($link,$class,$val) {
-        echo '<button onclick="location.href=\''.$link.'\'" class="'.$class.'">'.$val.'</button>';
+        echo '<button id="but" onclick="javascript:buttonx(\''.$link.'\')" class="'.$class.'">'.$val.'</button>';
     }         
     function searchform($mode,$tab) {                
         echo "
