@@ -34,7 +34,7 @@
             }
             if(isset($_SESSION['activate'])) {
                 echo "<button class='user' onclick=\"location.href='index.php?tab=&mode=search&kind=user&find=".$_SESSION['activate']['id']."'\">
-                    <span><b> USER</b></span><span>".$_SESSION['activate']['name']."</span>
+                    <span><b>&nbsp;USER</b></span><span>".$_SESSION['activate']['name']."</span>
                 </button>";
             }
     ?>
@@ -119,7 +119,8 @@
         echo "text-align:center;";
     }
     ?>">
-        <legend style="text-align: left;font-weight : bold; font-size: 25px; border: 2px solid black; padding:3px 5px 3px 5px; margin-top:3px; border-radius:5px;">
+        <legend style="text-align: left;font-weight : bold; font-size: 25px; border: 2px solid black;
+            padding:3px 5px 3px 5px; margin-top:3px; border-radius:5px; background-color:whitesmoke;">
             <?php
                 if(isset($_GET['mode'])) {
                     echo strtoupper($_GET['mode']);
