@@ -362,8 +362,17 @@ textarea {
         margin-top: 40px;
     }
     .box {
+        width: 40%;
+        margin: 10px;
+    }
+}
+@media(max-width: 287px) {
+    .box {
         width: 80%;
         margin: 15px;
+    }
+    #searchbutton{
+        margin-top: 5px;
     }
 }
 @media(min-width: 850px) {
