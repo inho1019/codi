@@ -14,7 +14,7 @@
     font-family: 'NanumSquareNeo-Variable';
 }
 body {
-    background-color: floralwhite;
+    background-color:  floralwhite;
 }
 .title {
     font-family: 'LINESeedKR-Bd';
@@ -57,7 +57,8 @@ fieldset {
     margin-top: 10px;
     padding-top: 20px;
     padding-bottom: 20px;
-    border: 3px dashed black;
+    border: 3px solid black;
+    border-radius: 1vw;
 }
 .box {
     font-size: 15px;
@@ -66,9 +67,9 @@ fieldset {
     height: 100px;
     margin: 14px;
     border-top: solid 1.5px black;
-    border-left: dotted 3px saddlebrown;
+    border-left: dashed 2.5px saddlebrown;
     border-bottom: solid 3px black;
-    border-right: solid 3px black;
+    border-right: solid 2.5px black;
     border-top-right-radius: 6px;
     background-color: wheat;
     box-shadow: 0.8vw 0.8vw lightgray;
@@ -278,6 +279,16 @@ textarea {
     background-color: lightgrey;
     transition: 0.3s ease-out;
 }
+#lege {
+    text-align: left;
+    font-weight : bold;
+    font-size: 25px;
+    border: 2px solid black;
+    padding:3px 5px 3px 5px;
+    margin-top:3px;
+    border-radius:5px;
+    background-color:whitesmoke;
+}
 @media(max-width: 576px) {
     .searchform {
         width: 85%;
@@ -334,6 +345,9 @@ textarea {
     }
     .rein {
         width: 77%;
+    }
+    #lege {
+        font-size: 20px;
     }
 }
 @media(min-width: 850px) {
