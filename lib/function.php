@@ -155,7 +155,7 @@
             ".$lfile." 
             time = DATE_ADD(NOW(), INTERVAL 9 HOUR)
             where num = ".$link."");
-            header('Location: index.php');
+            header('Location: index.php?mode=read&file='.$link.'');
         } else {
             header('Location: index.php?mode=update&file='.$link.'&error=0');
         }
