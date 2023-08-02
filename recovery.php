@@ -4,7 +4,7 @@
         color:white;
     }
 </style>
-<a href="index.php">MAIN</a><br><br>
+<a href="index.php?mode=trash">BACK</a><br><br>
 <?php
 require('lib/function.php');
 global $con;
