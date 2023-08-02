@@ -253,8 +253,7 @@ textarea {
     margin-left: 10px;
 }
 #selform {
-    margin-top:60px;
-    margin-right: 2vw;
+    margin-top:79px;
     float: right;
 }
 .rein {
@@ -339,10 +338,6 @@ textarea {
         margin-left: 5vw;
         width: 77vw;
     }
-    .sel {
-        margin-bottom: 17px;
-        font-size: 10px;
-    }
     .rein {
         width: 77%;
     }
@@ -351,6 +346,24 @@ textarea {
     }
     fieldset {
         margin-top: 20px;
+    }
+    #selform {
+        margin-top: 72.5px;
+    }
+}
+@media(max-width: 367px) {
+    .title {
+        font-size: 30px;
+    }
+    .searchform {
+        width: 100%;
+    }
+    #selform {
+        margin-top: 40px;
+    }
+    .box {
+        width: 80%;
+        margin: 15px;
     }
 }
 @media(min-width: 850px) {
