@@ -153,7 +153,7 @@
                             }
                             echo '<form class="wrform" action="redir.php" method="post" enctype="multipart/form-data"> 
                             <select name="sel">
-                            <option value="[--]">None</option>';
+                            <option value="[__]">None</option>';
                             wrselect();
                             echo '</select><br>';
                             form($title,$exp,"Post",null,);
@@ -166,7 +166,7 @@
                             if(isset($_SESSION['activate'])) {
                                 $file = mysqli_fetch_assoc(mysqli_query($con,"select * from file where num = ".$_GET["file"]));
                                 if ($file["id"] == $_SESSION['activate']['id'] || $_SESSION['activate']['id'] == 'admin') {
-                                    $val = "[--]";
+                                    $val = "[__]";
                                     $txt = "None";
                                     $data = file_get_contents('lib/select');
                                     $seldata = explode("\n", $data);

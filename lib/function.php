@@ -104,13 +104,12 @@
         } 
     function sortsql() {
         global $con;
-        $data = mysqli_query($con,"select * from file");
+        $data = mysqli_query($con,"select * from file order by num desc");
         $writer = "Unknown";
         $filear = array();
         while ($detail = mysqli_fetch_assoc($data)) {
             $filear[] = $detail;
         };
-        rsort($filear);
         for ($i = 0;$i < count($filear);$i++){
             if (isset($filear[$i])) {
                 $writer = $filear[$i]["writer"];
@@ -203,14 +202,13 @@
                 $tab = "tab like '%".$_GET['tab']."%'";
             }
         }
-        $data = mysqli_query($con,"select * from file where ".$kind.$find.$tab);
+        $data = mysqli_query($con,"select * from file where ".$kind.$find.$tab." order by num desc");
         $writer = "Unknown";
         $filear = array();
         while ($detail = mysqli_fetch_assoc($data)) {
             $sw = 1;
             $filear[] = $detail;
         };
-        rsort($filear);
         for ($i = 0;$i < count($filear);$i++){
             if (isset($filear[$i])) {
                 $writer = $filear[$i]["writer"];

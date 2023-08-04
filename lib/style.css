@@ -185,7 +185,7 @@ textarea {
 #searchbutton {
     border: solid black 1px;
     background-color: wheat;
-    border-radius: 0.5vw;
+    border-radius: 2.5px;
     padding-top: 2px;
 }
 #searchbutton:hover {
