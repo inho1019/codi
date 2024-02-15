@@ -23,8 +23,8 @@
     use Aws\S3\Exception\S3Exception;
 
     $bucketName = 'codingdiary';
-    $accessKeyId = 'AKIAXPHWSBHLWATBGOMJ';
-    $secretAccessKey = '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';
+    $accessKeyId = getenv('AWS_ACCESS_KEY_ID');
+    $secretAccessKey = getenv('AWS_SECRET_ACCESS_KEY');
     $region = 'eu-west-2';
 
     $awClient = new S3Client([
@@ -41,7 +41,7 @@
         $con = mysqli_init();
         $con->ssl_set(NULL, NULL, "ssl/cacert.pem", NULL, NULL);
         $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb', 
-        'pscale_pw_W9alE0Qda7YzLuuyDJxL2HiOdnHVppey6OycKPTZrFY', 'codi');
+        getenv('DB_PASSWORD') , 'codi');
     //
     function form($val1,$val2,$submit,$hidden) {
         echo ' <input type="hidden" value="'.$hidden.'" name="file">
