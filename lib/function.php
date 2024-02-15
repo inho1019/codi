@@ -40,7 +40,7 @@
     global $con;
         $con = mysqli_init();
         $con->ssl_set(NULL, NULL, "ssl/cacert.pem", NULL, NULL);
-        $con->real_connect('gcp.connect.psdb.cloud', 't6iojlguel9xxxqhf4vb', 
+        $con->real_connect('gcp.connect.psdb.cloud', 'tqb95fe0scbep5q2qipt', 
         getenv('DB_PASSWORD') , 'codi');
     //
     function form($val1,$val2,$submit,$hidden) {
