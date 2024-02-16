@@ -1,6 +1,6 @@
 # 
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/a10cc81a-038e-43c7-be79-c89e4a580c88/5b38fad2-6db7-4853-8671-709f4195ab51/Untitled.png)
+![Untitled](https://codingdiary.s3.eu-west-2.amazonaws.com/free-icon-diary-3404956.ico)
 
 분류 : 게시판
 
